@@ -556,32 +556,9 @@ class Entity(ClientMixin):
         return iter(self._data.copy())
 
     def __str__(self):
-        """Return a more meaningful class string."""
         id_ = hex(id(self))
         clsname = self.__class__.__name__
-
-        info = {}
-        for field in self.__class__.STR_OUTPUT_FIELDS:
-            depth = field.split('.')
-            original_field = field
-            try:
-                value = self
-                while depth:
-                    field = depth.pop(0)
-                    value = value[field]
-            except:
-                pass
-
-            info[original_field] = value
-
-        if not info.get('id') and 'id' in self.__class__.STR_OUTPUT_FIELDS:
-            return '<%s uninitialized at %s>' % (clsname, id_,)
-
-        output = '<%s ' % clsname
-        for k, v in info.items():
-            output += '%s="%s" ' % (k, v)
-        output += 'at %s>' % id_
-        return output
+        return "{} {}".format(clsname, id_)
 
     def __repr__(self):
         """Return a more meaningful programmer representation string."""
